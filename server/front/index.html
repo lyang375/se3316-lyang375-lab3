@@ -11,21 +11,48 @@
 </head>
 
 <body>
-    <h1>Time Table System</h1>
-    <div class="getAll">
-        <input type="button" id="btnGetAll" value="get subject code and description">
 
+    <div class="TimeTable">
+        <h1>Time Table System</h1>
+        <div class="getAll">
+            <label>Get all available subject code and descriptions:</label>
+            <input type="button" id="btnGetAll" value="get subject code and description">
+
+        </div>
+
+        <div class="subjectForm">
+            <label>Get course codes with given subject code:</label>
+            <form id="getCode" method="GET" action="/result2">
+                <input type="text" id="inputSubject" placeh2older="enter subject code">
+                <input type="button" id="btnSubject" value="search">
+            </form>
+
+        </div>
+        <div class="getTB">
+            <labe>Get entires for a give subject code, a course code and an optional component</labe>
+            <form>
+                <label>Enter Subject Code</label>
+                <input type="text" id="inputSubject2" placeh2older="enter subject code">
+                <label>Enter Course Code</label>
+                <input type="text" id="inputCourseCode" placeh2older="enter course code">
+                <div class="dropdown">
+                    <button onclick="dropdown()" class="dropbtn">Get TimeTable</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#LEC">LEC</a>
+                        <a href="#TUT">TUT</a>
+                        <a href="#LAB">LAB</a>
+                    </div>
+                </div>
+                <input type="button" id="btnGetThree" value="search">
+            </form>
+        </div>
+
+        <div class="returnedInfo">
+            <ul id="output"></ul>
+        </div>
+
+
+        <script src="front.js"></script>
     </div>
-    
-    <div class="subjectForm">
-        <input type="text" id="inputSubject" placeholder="enter subject code">
-        <input type="button" id="btnSubject" value="search">
-    </div>
 
-    <div class="returnedInfo">
-        <ul id="output"></ul>
-    </div>
-
-
-    <script src="front.js"></script>
 </body>
