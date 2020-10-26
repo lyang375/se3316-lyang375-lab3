@@ -17,8 +17,11 @@
     margin-left: 20px;
 }
 
+.getTB label input{
+   margin-left: 40px;
+}
 .dropbtn {
-    background-color: green; 
+    background-color: rgb(73, 146, 73); 
     padding: 12px;
     font-size: 12px;
     border: none;
@@ -26,7 +29,6 @@
   }
   
 .dropdown {
-   
     position: relative;
     display: inline;
   }
@@ -48,3 +50,8 @@
   }
 .dropdown a:hover {background-color: #ddd;}
 .show {display: block;}
+
+.createSchedule{
+    padding-top: 40px;
+    margin-left: 20px;
+}

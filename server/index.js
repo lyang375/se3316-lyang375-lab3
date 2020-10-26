@@ -14,9 +14,6 @@ const result = props.map(function (prop) {
     };
 });
 
-
-
-
 app.use('/', express.static('front'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -39,7 +36,7 @@ router.post('/result2', function (req, res) {
             return timetable[prop]
         }
     })
-    if (result && result !== null) {
+    if (result) {
         res.send(result);
     }
     else {
@@ -47,8 +44,28 @@ router.post('/result2', function (req, res) {
     }
 })
 
-router.get('/result3', function (req, res) {
-    res.send(result3)
+router.post('/result3', function (req, res) {
+    var subCode = req.body.subjectCode;
+    var courseCode = req.body.courseCode;
+    var component = req.body.component;
+    if (component.length == 0) {
+        var criteria = { "subject": subCode, "catagory_nbr": courseCode }
+    }
+    else {
+        var criteria = { "subject": subCode, "catagory_nbr": courseCode, "ssr_component": component }
+    }
+    const result = timetable.find(function (t) {
+        return Object.keys(criteria).every(key => [
+            t[key] == criteria[key]
+        ])
+    })
+    if (result) {
+        res.send(result);
+    }
+    else {
+        res.status(404).send(`Course Code or Subejct Code does not exist`)
+    }
+
 })
 router.post('/result', function (req, res) {
 

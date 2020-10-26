@@ -23,30 +23,38 @@
         <div class="subjectForm">
             <label>Get course codes with given subject code:</label>
             <form id="getCode" method="GET" action="/result2">
-                <input type="text" id="inputSubject" placeh2older="enter subject code">
+                <input type="text" id="inputSubject" placeholder="enter subject code">
                 <input type="button" id="btnSubject" value="search">
             </form>
 
         </div>
         <div class="getTB">
-            <labe>Get entires for a give subject code, a course code and an optional component</labe>
-            <form>
-                <label>Enter Subject Code</label>
-                <input type="text" id="inputSubject2" placeh2older="enter subject code">
-                <label>Enter Course Code</label>
-                <input type="text" id="inputCourseCode" placeh2older="enter course code">
-                <div class="dropdown">
-                    <button onclick="dropdown()" class="dropbtn">Get TimeTable</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <a href="#LEC">LEC</a>
-                        <a href="#TUT">TUT</a>
-                        <a href="#LAB">LAB</a>
+            <labe>Get entires for a give subject code, a course code and an optional component:</label>
+                <div id="getTBForm">
+                    <label>Enter Subject Code</label>
+                    <input type="text" id="inputSubject2" placeholder="enter subject code">
+                    <label>Enter Course Code</label>
+                    <input type="text" id="inputCourseCode" placeholder="enter course code">
+                    <div class="dropdown">
+                        <button onclick="dropdown()" class="dropbtn">Component</button>
+                        <select id="myDropdown" class="dropdown-content">
+                            <option value=""></option>
+                            <option value="LEC">LEC</option>
+                            <option value="TUT">TUT</option>
+                            <option value="LAB">LAB</option>
+                        </select>
                     </div>
                 </div>
-                <input type="button" id="btnGetThree" value="search">
-            </form>
+                <input type="button" id="btnGetTB" value="Get Timetable">
         </div>
+        <div class="createSchedule">
+            <labe>Create a new schedule</labe>
+            <div id="scheduleForm">
+                <input type="text" id="scheduleName" placeholder="enter schedule name">
+                
+            </div>
 
+        </div>
         <div class="returnedInfo">
             <ul id="output"></ul>
         </div>
