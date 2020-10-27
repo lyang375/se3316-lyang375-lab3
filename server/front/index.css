@@ -1,5 +1,19 @@
-.TimeTable{
-    display: block;
+
+h1{
+    text-align: center;
+    font-size: 40px;
+    
+}
+.schdule{
+    margin-left: 180px;
+    margin-top: 80px;
+}
+.search{
+    margin-left: 50px;
+    margin-top: 20px;
+}
+.TimeTable > div{
+    display: inline-block;
 }
 .getAll{
     padding-top: 20px;
@@ -54,4 +68,27 @@
 .createSchedule{
     padding-top: 40px;
     margin-left: 20px;
+}
+
+.saveSchedule{
+    padding-top: 40px;
+    margin-left: 20px;
+}
+
+.getListElements{
+    padding-top: 40px;
+    margin-left: 20px;
+}
+
+.deleteSchedule{
+    padding-top: 40px;
+    margin-left: 20px;
+}
+.getScheduleList{
+    padding-top: 40px;
+    margin-left: 20px
+}
+.deleteAllSchedule{
+    padding-top: 40px;
+    margin-left: 20px
 }
