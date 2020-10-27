@@ -48,11 +48,11 @@ router.post('/result2', function (req, res) {
         }
         return true;
     });
-    if (filterOne) {
+    if (filterOne && filterOne.length > 0) {
         res.send(filterOne);
     }
     else {
-        res.status(404).send(`Course Code of ${subCode} was not found`)
+        res.status(404).send({ err: `Subject Code: ${subCode2} does not exist` })
     }
 })
 
@@ -68,8 +68,11 @@ router.post('/result3', function (req, res) {
             for (var key in criteriaTwo) {
                 if (item[key] === undefined || item[key] != criteriaTwo[key])
                     return false;
+                else {
+                    return true;
+                }
             }
-            return true;
+
         });
     }
     else {
@@ -81,39 +84,16 @@ router.post('/result3', function (req, res) {
                 }
             }
             return true;
-
         });
     }
-
-    /*
-    if (component.length == 0) {
-        criteria = { "subject": subCode3, "catagory_nbr": courseCode }
-    }
-    else {
-        criteria = { "subject": subCode3, "catagory_nbr": courseCode, "ssr_component": component }
-    }
-    
-    function filterBy(list, c) {
-        return list.filter(candidate =>
-            Object.keys(c).every(key =>
-                candidate[key] == c[key]
-            )
-        );
-    }
-    const result3 = filterBy(timetable, criteria);
-    /*
-    const result3 = timetable.find(t => {
-        Object.keys(criteria).every(key => [
-            t[key] === criteria[key]
-        ])
-    })
-    */
     if (filterTwo) {
         res.send(filterTwo);
     }
     else {
-        res.status(404).json({ error: 'Course Code or Subject Code does not exist' })
+        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
     }
+
+
 
 })
 
@@ -121,14 +101,17 @@ router.post('/newSchedule', function (req, res) {
     const body = req.body;
 
     if (body.name === undefined) {
-        return res.status(400).json({ error: 'content missing' })
+        return res.status(400).json({ err: 'content missing' })
     }
-    const schedule = new Schedule({
-        name: body.name
-    })
-    schedule.save().then(savedSchedule => {
-        res.json(savedSchedule)
-    })
+    if (Schedule.find({ name: body.name }).then(res.json({ err: 'Name already exists' })));
+    else {
+        const schedule = new Schedule({
+            name: body.name
+        })
+        schedule.save().then(savedSchedule => {
+            res.json(savedSchedule)
+        })
+    }
 })
 router.put('/submitSchedule', function (req, res) {
     const body = req.body;
