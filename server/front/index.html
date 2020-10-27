@@ -14,47 +14,92 @@
 
     <div class="TimeTable">
         <h1>Time Table System</h1>
-        <div class="getAll">
-            <label>Get all available subject code and descriptions:</label>
-            <input type="button" id="btnGetAll" value="get subject code and description">
+        <div class="search">
+            <div class="getAll">
+                <label>Get all available subject code and descriptions:</label>
+                <input type="button" id="btnGetAll" value="get subject code and description">
 
-        </div>
+            </div>
 
-        <div class="subjectForm">
-            <label>Get course codes with given subject code:</label>
-            <form id="getCode" method="GET" action="/result2">
-                <input type="text" id="inputSubject" placeholder="enter subject code">
-                <input type="button" id="btnSubject" value="search">
-            </form>
+            <div class="subjectForm">
+                <label>Get course codes with given subject code:</label>
+                <form id="getCode" method="GET" action="/result2">
+                    <input type="text" id="inputSubject" placeholder="enter subject code">
+                    <input type="button" id="btnSubject" value="search">
+                </form>
 
-        </div>
-        <div class="getTB">
-            <labe>Get entires for a give subject code, a course code and an optional component:</label>
-                <div id="getTBForm">
-                    <label>Enter Subject Code</label>
-                    <input type="text" id="inputSubject2" placeholder="enter subject code">
-                    <label>Enter Course Code</label>
-                    <input type="text" id="inputCourseCode" placeholder="enter course code">
-                    <div class="dropdown">
-                        <button onclick="dropdown()" class="dropbtn">Component</button>
-                        <select id="myDropdown" class="dropdown-content">
-                            <option value=""></option>
-                            <option value="LEC">LEC</option>
-                            <option value="TUT">TUT</option>
-                            <option value="LAB">LAB</option>
-                        </select>
+            </div>
+            <div class="getTB">
+                <labe>Get entires for a give subject code, a course code and an optional component:</label>
+                    <div id="getTBForm">
+                        <label>Enter Subject Code</label>
+                        <input type="text" id="inputSubject2" placeholder="enter subject code">
+                        <label>Enter Course Code</label>
+                        <input type="text" id="inputCourseCode" placeholder="enter course code">
+                        <div class="dropdown">
+                            <button onclick="dropdown()" class="dropbtn">Component</button>
+                            <select id="myDropdown" class="dropdown-content">
+                                <option value=""></option>
+                                <option value="LEC">LEC</option>
+                                <option value="TUT">TUT</option>
+                                <option value="LAB">LAB</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <input type="button" id="btnGetTB" value="Get Timetable">
+                    <input type="button" id="btnGetTB" value="Get Timetable">
+            </div>
+
+
         </div>
-        <div class="createSchedule">
-            <labe>Create a new schedule</labe>
-            <div id="scheduleForm">
-                <input type="text" id="scheduleName" placeholder="enter schedule name">
-                
+        <div class="schdule">
+            <div class="createSchedule">
+                <labe>Create a new schedule</labe>
+                <div id="createScheduleForm">
+                    <input type="text" id="scheduleName" placeholder="enter schedule name">
+                    <input type="button" id="btnCreateSchedule" value="Create">
+                </div>
+
+            </div>
+            <div class="saveSchedule">
+                <label>Save a list of subject code and course code pairs under a given schedule name</label>
+                <div id="saveScheduleForm">
+                    <input type="text" id="saveScheduleName" placeholder="enter schedule name">
+                    <input type="text" id="saveSubjectCode" placeholder="enter subject code">
+                    <input type="text" id="saveCourseCode" placeholder="enter course code">
+                    <input type="button" id="btnSubmitSchedule" value="Save">
+                </div>
+            </div>
+
+            <div class="getListElements">
+                <label>Get the list of subject code and course code pairs for a given schedule</label>
+                <div id="getListForm">
+                    <input type="text" id="getScheduleNameForList" placeholder="enter schedule name">
+                    <input type="button" id="btnSubmitScheduleForList" value="Get the List">
+                </div>
+            </div>
+
+
+            <div class="deleteSchedule">
+                <label>Delete a schdule with given name</label>
+                <div id="deleteScheduleForm">
+                    <input type="text" id="deleteScheduleName" placeholder="enter schedule name">
+                    <input type="button" id="btnDeleteSchedule" value="Delete the Schedule">
+                </div>
+
+            </div>
+
+            <div class="getScheduleList">
+                <label>Get a list of schedule names and number of courses that are saved</label>
+                <input type="button" id="btnGetAllSchedule" value="Get all Schedule">
+            </div>
+
+            <div class="deleteAllSchedule">
+                <label>Delete all schedule</label>
+                <input type="button" id="btnDeleteAllSchedule" value="Delete all Schedule">
             </div>
 
         </div>
+
         <div class="returnedInfo">
             <ul id="output"></ul>
         </div>

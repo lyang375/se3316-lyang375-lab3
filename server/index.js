@@ -1,3 +1,6 @@
+require('dotenv').config()
+const mongoose = require('mongoose')
+const Schedule = require('./models/schedule')
 const fs = require('fs');
 const express = require('express');
 const app = express();
@@ -13,6 +16,8 @@ const result = props.map(function (prop) {
         description: timetable[prop].course_info[0].descr
     };
 });
+
+
 
 app.use('/', express.static('front'));
 app.use(bodyParser.json());
@@ -30,14 +35,18 @@ router.get('/result', function (req, res) {
     res.send(result)
 })
 router.post('/result2', function (req, res) {
-    var subCode = req.body.subjectCode;
-    const result = props.map(function (prop) {
-        if (timetable[prop].subject === subCode) {
-            return timetable[prop]
+    const subCode2 = req.body.subjectCode;
+    let criteriaOne;
+    criteriaOne = { "subject": subCode2 }
+    const filterTimetable = timetable.filter(function (item) {
+        for (var key in criteriaOne) {
+            if (item[key] === undefined || item[key] != criteriaOne[key])
+                return false;
         }
-    })
-    if (result) {
-        res.send(result);
+        return true;
+    });
+    if (filterTimetable) {
+        res.send(filterTimetable);
     }
     else {
         res.status(404).send(`Course Code of ${subCode} was not found`)
@@ -45,31 +54,125 @@ router.post('/result2', function (req, res) {
 })
 
 router.post('/result3', function (req, res) {
-    var subCode = req.body.subjectCode;
-    var courseCode = req.body.courseCode;
-    var component = req.body.component;
+    const subCode3 = req.body.subjectCode;
+    const courseCode = req.body.courseCode;
+    const component = req.body.component;
+    let criteriaTwo;
+    criteriaTwo = { "subject": subCode3, "catagory_nbr": courseCode }
+    const filterTimetable = timetable.filter(function (item) {
+        for (var key in criteria) {
+            if (item[key] === undefined || item[key] != criteria[key])
+                return false;
+        }
+        return true;
+    });
+    /*
     if (component.length == 0) {
-        var criteria = { "subject": subCode, "catagory_nbr": courseCode }
+        criteria = { "subject": subCode3, "catagory_nbr": courseCode }
     }
     else {
-        var criteria = { "subject": subCode, "catagory_nbr": courseCode, "ssr_component": component }
+        criteria = { "subject": subCode3, "catagory_nbr": courseCode, "ssr_component": component }
     }
-    const result = timetable.find(function (t) {
-        return Object.keys(criteria).every(key => [
-            t[key] == criteria[key]
+    
+    function filterBy(list, c) {
+        return list.filter(candidate =>
+            Object.keys(c).every(key =>
+                candidate[key] == c[key]
+            )
+        );
+    }
+    const result3 = filterBy(timetable, criteria);
+    /*
+    const result3 = timetable.find(t => {
+        Object.keys(criteria).every(key => [
+            t[key] === criteria[key]
         ])
     })
-    if (result) {
-        res.send(result);
+    */
+    if (filterTimetable) {
+        res.send(filterTimetable);
     }
     else {
-        res.status(404).send(`Course Code or Subejct Code does not exist`)
+        res.status(404).json({ error: 'Course Code or Subject Code does not exist' })
     }
 
 })
-router.post('/result', function (req, res) {
+
+router.post('/newSchedule', function (req, res) {
+    const body = req.body;
+
+    if (body.name === undefined) {
+        return res.status(400).json({ error: 'content missing' })
+    }
+    const schedule = new Schedule({
+        name: body.name
+    })
+    schedule.save().then(savedSchedule => {
+        res.json(savedSchedule)
+    })
+})
+router.put('/submitSchedule', function (req, res) {
+    const body = req.body;
+    const getName = req.body.name;
+    const info = {
+        name: body.name,
+        subjectCode: body.subjectCode,
+        courseCode: body.courseCode,
+    }
+    if (getName === undefined) {
+        return res.status(400).json({ error: 'content missing' })
+    }
+    return Schedule.findOneAndReplace(getName, info)
+        .then(replacedDocument => {
+            if (replacedDocument) {
+                res.json({ message: 'Successfully added' })
+            }
+            else {
+                res.json({ message: 'No such schedule found' })
+
+            }
+
+        })
+        .catch(err => console.log(err))
+
 
 })
+router.post('/getScheduleElement', function (req, res) {
+    const getSearchName = req.body.name;
+    Schedule.find({ name: getSearchName }).then(schedules =>
+        res.json(schedules)
+    );
+
+})
+router.post('/deleteSchedule', function (req, res) {
+    const getDeleteName = req.body.name;
+    Schedule.findOneAndDelete({ name: getDeleteName }, function (err, item) {
+        if (err) {
+            res.json({ error: 'Schedule does not exist' })
+        }
+        else {
+            res.json({ message: 'Success deleted item' })
+        }
+    });
+})
+// to get all schedule 
+router.get('/getAllSchedule', function (req, res) {
+    Schedule.find({}).then(schedules => {
+        res.json(schedules);
+    })
+})
+//to delete all schedule
+router.delete('/deleteAllSchedule', function (req, res) {
+    Schedule.remove({}, function (err) {
+        if (err) {
+            res.json({ error: 'Delete was not performed' })
+        }
+        else {
+            res.json({ message: 'Success deleted item' })
+        }
+    })
+})
+
 
 
 app.use('/api', router)
