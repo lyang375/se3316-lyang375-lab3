@@ -31,21 +31,22 @@
             </div>
             <div class="getTB">
                 <labe>Get entires for a give subject code, a course code and an optional component:</label>
-                    <div id="getTBForm">
+                    <form id="getTBForm">
                         <label>Enter Subject Code</label>
                         <input type="text" id="inputSubject2" placeholder="enter subject code">
                         <label>Enter Course Code</label>
                         <input type="text" id="inputCourseCode" placeholder="enter course code">
-                        <div class="dropdown">
-                            <button onclick="dropdown()" class="dropbtn">Component</button>
-                            <select id="myDropdown" class="dropdown-content">
-                                <option value=""></option>
-                                <option value="LEC">LEC</option>
-                                <option value="TUT">TUT</option>
-                                <option value="LAB">LAB</option>
-                            </select>
-                        </div>
+                    </form>
+                    <div class="dropdown">
+                        <button onclick="dropdown()" class="dropbtn">Component</button>
+                        <select id="myDropdown" class="dropdown-content">
+                            <option value=""></option>
+                            <option value="LEC">LEC</option>
+                            <option value="TUT">TUT</option>
+                            <option value="LAB">LAB</option>
+                        </select>
                     </div>
+
                     <input type="button" id="btnGetTB" value="Get Timetable">
             </div>
 

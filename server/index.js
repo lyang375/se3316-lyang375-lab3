@@ -9,6 +9,9 @@ var bodyParser = require('body-parser');
 const data = fs.readFileSync('Lab3-timetable-data.json');
 const timetable = JSON.parse(data);
 const props = Object.keys(timetable)
+const course_info = props.map(function (prop) {
+    return timetable[prop].course_info;
+})
 const result = props.map(function (prop) {
     return {
         id: prop,
@@ -38,15 +41,15 @@ router.post('/result2', function (req, res) {
     const subCode2 = req.body.subjectCode;
     let criteriaOne;
     criteriaOne = { "subject": subCode2 }
-    const filterTimetable = timetable.filter(function (item) {
+    const filterOne = timetable.filter(function (item) {
         for (var key in criteriaOne) {
             if (item[key] === undefined || item[key] != criteriaOne[key])
                 return false;
         }
         return true;
     });
-    if (filterTimetable) {
-        res.send(filterTimetable);
+    if (filterOne) {
+        res.send(filterOne);
     }
     else {
         res.status(404).send(`Course Code of ${subCode} was not found`)
@@ -58,14 +61,30 @@ router.post('/result3', function (req, res) {
     const courseCode = req.body.courseCode;
     const component = req.body.component;
     let criteriaTwo;
-    criteriaTwo = { "subject": subCode3, "catagory_nbr": courseCode }
-    const filterTimetable = timetable.filter(function (item) {
-        for (var key in criteria) {
-            if (item[key] === undefined || item[key] != criteria[key])
-                return false;
-        }
-        return true;
-    });
+    var filterTwo;
+    if (component === "") {
+        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
+        filterTwo = timetable.filter(function (item) {
+            for (var key in criteriaTwo) {
+                if (item[key] === undefined || item[key] != criteriaTwo[key])
+                    return false;
+            }
+            return true;
+        });
+    }
+    else {
+        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode, "ssr_component": component }
+        filterTwo = timetable.filter(function (item) {
+            for (var prop in props) {
+                if (criteriaTwo[prop] === undefined || criteriaTwo[prop] != item[prop]) {
+                    return false
+                }
+            }
+            return true;
+
+        });
+    }
+
     /*
     if (component.length == 0) {
         criteria = { "subject": subCode3, "catagory_nbr": courseCode }
@@ -89,8 +108,8 @@ router.post('/result3', function (req, res) {
         ])
     })
     */
-    if (filterTimetable) {
-        res.send(filterTimetable);
+    if (filterTwo) {
+        res.send(filterTwo);
     }
     else {
         res.status(404).json({ error: 'Course Code or Subject Code does not exist' })

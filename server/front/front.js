@@ -96,25 +96,26 @@ function getTB() {
         body: JSON.stringify({
             subjectCode: subCode,
             courseCode: courseCode,
-            component: component
+            component: component,
         })
     }).then(res => {
         return res.json()
     })
         .then(data => {
-            return data.course_info.map(function (d) {
+            return data.map(function (d) {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `Course Number: ${d.class_nbr} Start Time: ${d.start_time} Pre-requist: ${d.descrlong} 
-                End Time: ${d.end_time} Campus: ${d.campus} Facility ID: ${d.facility_ID} Days: ${d.days} 
-                Instructor: ${d.instructors} Class Section: ${d.class_section} Component: ${d.ssr_component} 
-                Status: ${d.enrl_stat} Description: ${d.descr}`
+                span.innerHTML = `Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
+                End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
+                Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
+                Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`
                 append(li, span);
                 append(ul, li);
             })
 
         })
         .catch((err) => console.log(err))
+    document.getElementById('getTBForm').reset();
 
 }
 function createScheduleName() {
