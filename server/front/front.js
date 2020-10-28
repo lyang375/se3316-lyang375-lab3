@@ -46,7 +46,7 @@ function getAll() {
             return data.map(function (d) {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `Subject: ${d.subjectCode} Description: ${d.description}`;
+                span.appendChild(document.createTextNode(`Subject: ${d.subjectCode} Description: ${d.description}`));
                 append(li, span);
                 append(ul, li);
             })
@@ -76,7 +76,7 @@ function getCode() {
             }
             else {
                 return data.map(function (d) {
-                    span.innerHTML = `Course Code ${d.catalog_nbr}`
+                    span.appendChild(document.createTextNode(`Course Code ${d.catalog_nbr}`));
                     append(li, span);
                     append(ul, li);
                 })
@@ -114,10 +114,10 @@ function getTB() {
                 return data.map(function (d) {
                     let li = createNode('li');
                     let span = createNode('span');
-                    span.innerHTML = `Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
+                    span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
                     End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
                     Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
-                    Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`
+                    Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`));
                     append(li, span);
                     append(ul, li);
                 })
@@ -148,7 +148,7 @@ function createScheduleName() {
             else {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `Success created schedule ${data.name}`;
+                span.appendChild(document.createTextNode(`Success created schedule ${data.name}`));
                 append(li, span);
                 append(ul, li);
             }
@@ -182,7 +182,7 @@ function submitSchedule() {
             else {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `${data.message}`;
+                span.appendChild(document.createTextNode(`${data.message}`));
                 append(li, span);
                 append(ul, li);
             }
@@ -211,7 +211,7 @@ function getScheduleElement() {
             else {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `Subject Code: ${data[0].subjectCode} Course Code: ${data[0].courseCode}`;
+                span.appendChild(document.createTextNode(`Subject Code: ${data[0].subjectCode} Course Code: ${data[0].courseCode}`));
                 append(li, span);
                 append(ul, li);
             }
@@ -243,7 +243,7 @@ function deleteSchedule() {
             else {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `${data.message}`;
+                span.appendChild(document.createTextNode(`${data.message}`));
                 append(li, span);
                 append(ul, li);
             }
@@ -262,7 +262,7 @@ function getAllSchedule() {
             return data.map(function (d) {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.innerHTML = `Schedules: ${d.name} `
+                span.appendChild(document.createTextNode(`Schedules: ${d.name} `));
                 append(li, span);
                 append(ul, li);
             })
@@ -284,7 +284,7 @@ function deleteAllSchedule() {
         .then(data => {
             let li = createNode('li');
             let span = createNode('span');
-            span.innerHTML = `${data.message} `
+            span.appendChild(document.createTextNode(`${data.message} `));
             append(li, span);
             append(ul, li);
         })
