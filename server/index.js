@@ -72,7 +72,6 @@ router.post('/result3', function (req, res) {
                     return true;
                 }
             }
-
         });
     }
     else {
@@ -121,16 +120,18 @@ router.put('/submitSchedule', function (req, res) {
         subjectCode: body.subjectCode,
         courseCode: body.courseCode,
     }
+
     if (getName === undefined) {
         return res.status(400).json({ error: 'content missing' })
     }
+
     return Schedule.findOneAndReplace(getName, info)
         .then(replacedDocument => {
             if (replacedDocument) {
                 res.json({ message: 'Successfully added' })
             }
             else {
-                res.json({ message: 'No such schedule found' })
+                res.json({ err: 'No such schedule found' })
 
             }
 
@@ -141,9 +142,18 @@ router.put('/submitSchedule', function (req, res) {
 })
 router.post('/getScheduleElement', function (req, res) {
     const getSearchName = req.body.name;
-    Schedule.find({ name: getSearchName }).then(schedules =>
-        res.json(schedules)
-    );
+    Schedule.find({ name: getSearchName }, function (err, item) {
+        if (item.length === 0 || err) {
+            res.json({ err: 'No such schedule name found' })
+        }
+        else {
+            res.json(item)
+        }
+    })
+
+
+
+
 
 })
 router.post('/deleteSchedule', function (req, res) {

@@ -176,14 +176,19 @@ function submitSchedule() {
         return res.json()
     })
         .then(data => {
-            let li = createNode('li');
-            let span = createNode('span');
-            span.innerHTML = `${data.message}`;
-            append(li, span);
-            append(ul, li);
-
+            if (data.err) {
+                alert(data.err)
+            }
+            else {
+                let li = createNode('li');
+                let span = createNode('span');
+                span.innerHTML = `${data.message}`;
+                append(li, span);
+                append(ul, li);
+            }
         })
         .catch((err) => console.log(err))
+    document.getElementById('saveScheduleForm').reset();
 }
 function getScheduleElement() {
     document.getElementById('output').innerHTML = '';
@@ -200,15 +205,21 @@ function getScheduleElement() {
         return res.json()
     })
         .then(data => {
-            let li = createNode('li');
-            let span = createNode('span');
-            span.innerHTML = `Subject Code: ${data[0].subjectCode} Course Code: ${data[0].courseCode}`;
-            append(li, span);
-            append(ul, li);
+            if (data.err) {
+                alert(data.err)
+            }
+            else {
+                let li = createNode('li');
+                let span = createNode('span');
+                span.innerHTML = `Subject Code: ${data[0].subjectCode} Course Code: ${data[0].courseCode}`;
+                append(li, span);
+                append(ul, li);
+            }
+
 
         })
         .catch((err) => console.log(err))
-
+    document.getElementById('getListForm').reset();
 
 }
 function deleteSchedule() {
