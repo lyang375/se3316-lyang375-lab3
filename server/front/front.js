@@ -237,15 +237,20 @@ function deleteSchedule() {
         return res.json()
     })
         .then(data => {
-            let li = createNode('li');
-            let span = createNode('span');
-            span.innerHTML = `${data.message}`;
-            append(li, span);
-            append(ul, li);
+            if (data.err) {
+                alert(data.err)
+            }
+            else {
+                let li = createNode('li');
+                let span = createNode('span');
+                span.innerHTML = `${data.message}`;
+                append(li, span);
+                append(ul, li);
+            }
 
         })
         .catch((err) => console.log(err))
-
+    document.getElementById('deleteScheduleForm').reset();
 }
 function getAllSchedule() {
     document.getElementById('output').innerHTML = '';

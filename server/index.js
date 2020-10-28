@@ -152,20 +152,26 @@ router.post('/getScheduleElement', function (req, res) {
     })
 
 
-
-
-
 })
 router.post('/deleteSchedule', function (req, res) {
     const getDeleteName = req.body.name;
-    Schedule.findOneAndDelete({ name: getDeleteName }, function (err, item) {
-        if (err) {
-            res.json({ error: 'Schedule does not exist' })
+    Schedule.find({ name: getDeleteName }, function (err, item) {
+        if (item.length === 0 || err) {
+            res.json({ err: 'No such schedule name found' })
         }
         else {
-            res.json({ message: 'Success deleted item' })
+            Schedule.findOneAndDelete({ name: getDeleteName }, function (err, item) {
+                if (err) {
+                    res.json({ err: 'Delete was not performed' })
+                }
+                else {
+                    res.json({ message: 'Success deleted item' })
+                }
+
+            });
         }
-    });
+    })
+
 })
 // to get all schedule 
 router.get('/getAllSchedule', function (req, res) {
