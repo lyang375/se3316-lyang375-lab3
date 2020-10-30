@@ -17681,5 +17681,51 @@
       }
     ],
     "catalog_description": "A practical introduction to the basics of successful academic writing, designed for first-year students in all disciplines. Topics will range from grammar, sentence structure, and paragraphing to the principles of scholarly argument and research. \n\nAntirequisite(s): Writing 0002F/G, Writing 1002F/G, Writing 1021F/G, Writing 1022F/G, Writing 2101F/G.\n\nExtra Information: 3 lecture/tutorial hours. [This course will not serve as a prerequisite for any area of concentration]"
+  },
+  {
+    "catalog_nbr": "1020F",
+    "subject": "WRITING",
+    "className": "INTRO TO UNIV ESSAY WRITING",
+    "course_info": [
+      {
+        "class_nbr": 7702,
+        "start_time": "10:30 AM",
+        "descrlong": "",
+        "end_time": "11:30 AM",
+        "facility_ID": "BR-MRW152",
+        "days": [
+          "W"
+        ],
+        "instructors": [],
+        "class_section": 530,
+        "ssr_component": "TUT",
+        "enrl_stat": "Full",
+        "descr": "RESTRICTED TO STUDENTS REGISTERED AT AN AFFILIATED UNIVERSITY COLLEGE."
+      }
+    ],
+    "catalog_description": "A practical introduction to the basics of successful academic writing, designed for first-year students in all disciplines. Topics will range from grammar, sentence structure, and paragraphing to the principles of scholarly argument and research. \n\nAntirequisite(s): Writing 0002F/G, Writing 1002F/G, Writing 1021F/G, Writing 1022F/G, Writing 2101F/G.\n\nExtra Information: 3 lecture/tutorial hours. [This course will not serve as a prerequisite for any area of concentration]"
+  },
+  {
+    "catalog_nbr": "1020F",
+    "subject": "WRITING",
+    "className": "INTRO TO UNIV ESSAY WRITING",
+    "course_info": [
+      {
+        "class_nbr": 7702,
+        "start_time": "10:30 AM",
+        "descrlong": "",
+        "end_time": "11:30 AM",
+        "facility_ID": "BR-MRW152",
+        "days": [
+          "W"
+        ],
+        "instructors": [],
+        "class_section": 530,
+        "ssr_component": "LAB",
+        "enrl_stat": "Full",
+        "descr": "RESTRICTED TO STUDENTS REGISTERED AT AN AFFILIATED UNIVERSITY COLLEGE."
+      }
+    ],
+    "catalog_description": "A practical introduction to the basics of successful academic writing, designed for first-year students in all disciplines. Topics will range from grammar, sentence structure, and paragraphing to the principles of scholarly argument and research. \n\nAntirequisite(s): Writing 0002F/G, Writing 1002F/G, Writing 1021F/G, Writing 1022F/G, Writing 2101F/G.\n\nExtra Information: 3 lecture/tutorial hours. [This course will not serve as a prerequisite for any area of concentration]"
   }
 ]

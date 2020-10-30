@@ -75,16 +75,20 @@ router.post('/result3', function (req, res) {
         });
     }
     else {
-        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode, "ssr_component": component }
-        filterTwo = timetable.filter(function (item){
+        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
+        filterTwo = timetable.filter(function (item) {
             for (var key in criteriaTwo) {
-                if (item[key] === undefined || item[key] != criteriaTwo[key])
+                if ((item[key] == criteriaTwo[key]
+                    && item.course_info["ssr_component"] == component)
+                ) {
                     return false;
+                }
             }
             return true;
         });
+
     }
-    if (filterTwo && filterTwo.length > 0) {
+    if (filterTwo) {
         res.send(filterTwo);
     }
     else {
@@ -125,21 +129,47 @@ router.post('/addCourse', function (req, res) {
             res.json({ err: 'Schedule Name not found' })
         }
     })
+    var criteriaForAdd = { "subject": newSubject, "catalog_nbr": newCourse }
+    var filterForAdd = timetable.filter(function (item) {
+        for (var key in criteriaForAdd) {
+            if (item[key] === undefined || item[key] != criteriaForAdd[key])
+                return false;
+        }
+        return true;
+    });
+    if (filterForAdd && filterForAdd.length > 0) {
+        Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
+            if (add) {
+                res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
+            }
+            else {
+                res.json({ err: 'Fail' })
+            }
+        })
+    }
+    else {
+        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+    }
 
-    Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
-        if (add) {
-            res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
-        }
-        else {
-            res.json({ err: 'Fail' })
-        }
-    })
 
 })
 router.put('/submitSchedule', function (req, res) {
     const getName = req.body.name;
     const getSubject = req.body.subjectCode;
     const getCourse = req.body.courseCode;
+    Schedule.find({ name: getName }, function (err, item) {
+        if (item.length === 0) {
+            res.json({ err: 'Schedule Name not found' })
+        }
+    })
+    var criteriaForSave = { "subject": getSubject, "catalog_nbr": getCourse };
+    var filterForSave = timetable.filter(function (item) {
+        for (var key in criteriaForSave) {
+            if (item[key] === undefined || item[key] != criteriaForSave[key])
+                return false;
+        }
+        return true;
+    });
     const course = {
         subjectCode: getSubject,
         courseCode: getCourse
@@ -148,23 +178,22 @@ router.put('/submitSchedule', function (req, res) {
         name: getName,
         course: course
     }
+    if (filterForSave && filterForSave.length > 0) {
+        return Schedule.findOneAndReplace(getName, info)
+            .then(replacedDocument => {
+                if (replacedDocument) {
+                    res.json({ message: 'Successfully added' })
+                }
+                else {
+                    res.json({ err: 'Failed' })
+                }
 
-    if (getName === undefined) {
-        return res.status(400).json({ error: 'content missing' })
+            })
+            .catch(err => console.log(err))
     }
-    return Schedule.findOneAndReplace(getName, info)
-        .then(replacedDocument => {
-            if (replacedDocument) {
-                res.json({ message: 'Successfully added' })
-            }
-            else {
-                res.json({ err: 'No such schedule found' })
-
-            }
-
-        })
-        .catch(err => console.log(err))
-
+    else {
+        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+    }
 
 })
 router.post('/getScheduleElement', function (req, res) {
@@ -216,10 +245,7 @@ router.delete('/deleteAllSchedule', function (req, res) {
     })
 })
 
-
-
 app.use('/api', router)
-
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
