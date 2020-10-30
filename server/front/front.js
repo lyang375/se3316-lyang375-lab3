@@ -27,6 +27,7 @@ document.getElementById('btnSubmitScheduleForList').addEventListener('click', ge
 document.getElementById('btnDeleteSchedule').addEventListener('click', deleteSchedule);
 document.getElementById('btnGetAllSchedule').addEventListener('click', getAllSchedule);
 document.getElementById('btnDeleteAllSchedule').addEventListener('click', deleteAllSchedule);
+document.getElementById('btnAddCourse').addEventListener('click', addCourses);
 
 ul = document.getElementById('output');
 
@@ -46,7 +47,7 @@ function getAll() {
             return data.map(function (d) {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.appendChild(document.createTextNode(`Subject: ${d.subjectCode} Description: ${d.description}`));
+                span.appendChild(document.createTextNode(`Subject: ${d.subjectCode} Class Name: ${d.className}`));
                 append(li, span);
                 append(ul, li);
             })
@@ -69,13 +70,13 @@ function getCode() {
         return res.json()
     })
         .then(data => {
-            let li = createNode('li');
-            let span = createNode('span');
             if (data.err) {
                 alert(data.err)
             }
             else {
                 return data.map(function (d) {
+                    let li = createNode('li');
+                    let span = createNode('span');
                     span.appendChild(document.createTextNode(`Course Code ${d.catalog_nbr}`));
                     append(li, span);
                     append(ul, li);
@@ -90,7 +91,7 @@ function getCode() {
 function getTB() {
     document.getElementById('output').innerHTML = '';
     var subCode = document.getElementById('inputSubject2').value
-    var courseCode = document.getElementById('inputCourseCode').value
+    var courseCode1 = document.getElementById('inputCourseCode1').value
     var component = document.getElementById('myDropdown').value;
 
     fetch('http://localhost:3000/api/result3', {
@@ -100,7 +101,7 @@ function getTB() {
         },
         body: JSON.stringify({
             subjectCode: subCode,
-            courseCode: courseCode,
+            courseCode: courseCode1,
             component: component,
         })
     }).then(res => {
@@ -129,14 +130,14 @@ function getTB() {
 }
 function createScheduleName() {
     document.getElementById('output').innerHTML = '';
-    var scheduleName = document.getElementById('scheduleName').value
+    var createScheduleName = document.getElementById('createScheduleName').value;
     fetch('http://localhost:3000/api/newSchedule', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: scheduleName
+            name: createScheduleName,
         })
     }).then(res => {
         return res.json()
@@ -156,6 +157,40 @@ function createScheduleName() {
         })
         .catch((err) => console.log(err))
     document.getElementById('createScheduleForm').reset();
+}
+function addCourses() {
+    document.getElementById('output').innerHTML = '';
+    var ScheduleNameForAddPairs = document.getElementById('addPairsScheduleName').value;
+    var subjectCode = document.getElementById('inputSubjectCode').value;
+    var courseCode = document.getElementById('inputCourseCode2').value;
+    fetch('http://localhost:3000/api/addCourse', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: ScheduleNameForAddPairs,
+            subject: subjectCode,
+            catalog_nbr: courseCode
+        })
+    }).then(res => {
+        return res.json()
+    })
+        .then(data => {
+            if (data.err) {
+                alert(data.err)
+            }
+            else {
+                let li = createNode('li');
+                let span = createNode('span');
+                span.appendChild(document.createTextNode(`${data.message}`));
+                append(li, span);
+                append(ul, li);
+            }
+
+        })
+        .catch((err) => console.log(err))
+    document.getElementById('addCoursesForSchedule').reset();
 }
 function submitSchedule() {
     document.getElementById('output').innerHTML = '';
@@ -209,11 +244,15 @@ function getScheduleElement() {
                 alert(data.err)
             }
             else {
-                let li = createNode('li');
-                let span = createNode('span');
-                span.appendChild(document.createTextNode(`Subject Code: ${data[0].subjectCode} Course Code: ${data[0].courseCode}`));
-                append(li, span);
-                append(ul, li);
+                return data.map(function (d) {
+                    for (var i = 0; i < d.course.length; i++) {
+                        let li = createNode('li');
+                        let span = createNode('span');
+                        span.appendChild(document.createTextNode(`Subject: ${d.course[i].subjectCode} Course:${d.course[i].courseCode} `));
+                        append(li, span);
+                        append(ul, li);
+                    }
+                })
             }
 
 
@@ -262,7 +301,7 @@ function getAllSchedule() {
             return data.map(function (d) {
                 let li = createNode('li');
                 let span = createNode('span');
-                span.appendChild(document.createTextNode(`Schedules: ${d.name} `));
+                span.appendChild(document.createTextNode(`Schedules: ${d.name} Number of Courses: ${d.course.length}`));
                 append(li, span);
                 append(ul, li);
             })

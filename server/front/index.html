@@ -35,7 +35,7 @@
                         <label>Enter Subject Code</label>
                         <input type="text" id="inputSubject2" placeholder="enter subject code">
                         <label>Enter Course Code</label>
-                        <input type="text" id="inputCourseCode" placeholder="enter course code">
+                        <input type="text" id="inputCourseCode1" placeholder="enter course code">
                     </form>
                     <div class="dropdown">
                         <button onclick="dropdown()" class="dropbtn">Component</button>
@@ -56,8 +56,16 @@
             <div class="createSchedule">
                 <labe>Create a new schedule</labe>
                 <form id="createScheduleForm">
-                    <input type="text" id="scheduleName" placeholder="enter schedule name">
+                    <input type="text" id="createScheduleName" placeholder="enter schedule name for create">
                     <input type="button" id="btnCreateSchedule" value="Create">
+                   
+                </form>
+                <form id="addCoursesForSchedule">
+                    <input type="text" id="addPairsScheduleName" placeholder="enter schedule name for add courses">
+                    <input type="text" id="inputSubjectCode" placeholder="enter subject code">
+                    <input type="text" id="inputCourseCode2" placeholder="enter course code">
+                    <input type="button" id="btnAddCourse" value="Add Pairs">
+
                 </form>
 
             </div>

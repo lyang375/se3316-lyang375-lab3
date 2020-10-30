@@ -92,3 +92,9 @@ h1{
     padding-top: 40px;
     margin-left: 20px
 }
+.returnedInfo{
+    padding-top: 40px;
+    margin-left: 20px;
+    position: relative;
+    display: inline-block;
+}
