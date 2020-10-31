@@ -18,8 +18,6 @@ const result = props.map(function (prop) {
     };
 });
 
-
-
 app.use('/', express.static('front'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -196,11 +194,17 @@ router.put('/submitSchedule', function (req, res) {
 router.post('/getScheduleElement', function (req, res) {
     const getSearchName = string.sanitize(req.body.name);
     Schedule.find({ name: getSearchName }, function (err, item) {
-        if (item.length === 0 || err) {
-            res.json({ err: 'No such schedule name found' })
+        if (item) {
+            if (item.length === 0) {
+                res.json({ err: 'No courses inside the schedule' })
+            }
+            else {
+                res.json(item)
+            }
         }
         else {
-            res.json(item)
+            res.json({ err: 'No such schedule name found' })
+
         }
     })
 })

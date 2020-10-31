@@ -179,11 +179,16 @@ function createScheduleName() {
         fetch('http://localhost:3000/api/newSchedule', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept-Language': ''
             },
-            body: JSON.stringify({
-                name: createScheduleName,
-            })
+            body:
+                JSON.stringify({
+                    name: createScheduleName,
+                }),
+
+
+
         }).then(res => {
             return res.json()
         })
