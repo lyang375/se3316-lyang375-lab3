@@ -9,9 +9,7 @@ var bodyParser = require('body-parser');
 const data = fs.readFileSync('Lab3-timetable-data.json');
 const timetable = JSON.parse(data);
 const props = Object.keys(timetable)
-const course_info = props.map(function (prop) {
-    return timetable[prop].course_info;
-})
+var string = require('string-sanitizer');
 const result = props.map(function (prop) {
     return {
         id: prop,
@@ -31,6 +29,7 @@ app.use((req, res, next) => {
     next();
 })
 
+
 router.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 })
@@ -38,7 +37,7 @@ router.get('/result', function (req, res) {
     res.send(result)
 })
 router.post('/result2', function (req, res) {
-    const subCode2 = req.body.subjectCode;
+    const subCode2 = string.sanitize(req.body.subjectCode);
     let criteriaOne;
     criteriaOne = { "subject": subCode2 }
     const filterOne = timetable.filter(function (item) {
@@ -78,9 +77,8 @@ router.post('/result3', function (req, res) {
         criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
         filterTwo = timetable.filter(function (item) {
             for (var key in criteriaTwo) {
-                if ((item[key] == criteriaTwo[key]
-                    && item.course_info["ssr_component"] == component)
-                ) {
+                if (item[key] === undefined || (item[key] != criteriaTwo[key]
+                    && item.course_info["ssr_component"] != component)) {
                     return false;
                 }
             }
@@ -148,7 +146,7 @@ router.post('/addCourse', function (req, res) {
         })
     }
     else {
-        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+        res.status(404).send({ err: `Subject Code or Course Code does not exist or not match` })
     }
 
 
@@ -192,7 +190,7 @@ router.put('/submitSchedule', function (req, res) {
             .catch(err => console.log(err))
     }
     else {
-        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+        res.status(404).send({ err: `Subject Code or Course Code does not exist or not match` })
     }
 
 })
