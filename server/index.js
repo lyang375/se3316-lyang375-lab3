@@ -57,46 +57,45 @@ router.post('/result2', function (req, res) {
 
 
 router.post('/result3', function (req, res) {
-    const subCode3 = req.body.subjectCode;
-    const courseCode = req.body.courseCode;
-    const component = req.body.component;
-    let criteriaTwo;
-    let filterTwo;
-    if (component === "") {
-        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
-        filterTwo = timetable.filter(function (item) {
-            for (var key in criteriaTwo) {
-                if (item[key] === undefined || item[key] != criteriaTwo[key])
-                    return false;
-            }
-            return true;
+    const subCode3 = string.sanitize(req.body.subjectCode);
+    const courseCode = string.sanitize(req.body.courseCode);
+    const component = string.sanitize(req.body.component);
+    var criteriaTwo;
+    var filterTwo;
+    criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
+    filterTwo = timetable.filter(function (item) {
+        for (var key in criteriaTwo) {
+            if (item[key] === undefined || item[key] != criteriaTwo[key])
+                return false;
+        }
+        return true;
 
-        });
+    });
+    if (component === "") {
+        if (filterTwo && filterTwo.length > 0) {
+            res.send(filterTwo);
+        }
+        else {
+            res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+        }
     }
     else {
-        criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
-        filterTwo = timetable.filter(function (item) {
-            for (var key in criteriaTwo) {
-                if (item[key] === undefined || (item[key] != criteriaTwo[key]
-                    && item.course_info["ssr_component"] != component)) {
-                    return false;
+        if (filterTwo && filterTwo.length > 0) {
+            for (var i = 0; i < filterTwo.length; i++) {
+                if (filterTwo[i].course_info[0].ssr_component == component) {
+                    res.json(filterTwo[i])
                 }
             }
-            return true;
-        });
-
-    }
-    if (filterTwo) {
-        res.send(filterTwo);
-    }
-    else {
-        res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+        }
+        else {
+            res.status(404).send({ err: `Subject Code or Course Code does not exist` })
+        }
     }
 
 })
 
 router.post('/newSchedule', function (req, res) {
-    const newName = req.body.name;
+    const newName = string.sanitize(req.body.name);
     const course = new Array();
     Schedule.find({ name: newName }, function (err, item) {
         if (item.length === 0) {
@@ -115,9 +114,9 @@ router.post('/newSchedule', function (req, res) {
 })
 
 router.post('/addCourse', function (req, res) {
-    const scheduleName = req.body.name;
-    const newSubject = req.body.subject;
-    const newCourse = req.body.catalog_nbr;
+    const scheduleName = string.sanitize(req.body.name);
+    const newSubject = string.sanitize(req.body.subject);
+    const newCourse = string.sanitize(req.body.catalog_nbr);
     const course = {
         subjectCode: newSubject,
         courseCode: newCourse
@@ -152,9 +151,9 @@ router.post('/addCourse', function (req, res) {
 
 })
 router.put('/submitSchedule', function (req, res) {
-    const getName = req.body.name;
-    const getSubject = req.body.subjectCode;
-    const getCourse = req.body.courseCode;
+    const getName = string.sanitize(req.body.name);
+    const getSubject = string.sanitize(req.body.subjectCode);
+    const getCourse = string.sanitize(req.body.courseCode);
     Schedule.find({ name: getName }, function (err, item) {
         if (item.length === 0) {
             res.json({ err: 'Schedule Name not found' })
@@ -195,7 +194,7 @@ router.put('/submitSchedule', function (req, res) {
 
 })
 router.post('/getScheduleElement', function (req, res) {
-    const getSearchName = req.body.name;
+    const getSearchName = string.sanitize(req.body.name);
     Schedule.find({ name: getSearchName }, function (err, item) {
         if (item.length === 0 || err) {
             res.json({ err: 'No such schedule name found' })
@@ -206,7 +205,7 @@ router.post('/getScheduleElement', function (req, res) {
     })
 })
 router.post('/deleteSchedule', function (req, res) {
-    const getDeleteName = req.body.name;
+    const getDeleteName = string.sanitize(req.body.name);
     Schedule.find({ name: getDeleteName }, function (err, item) {
         if (item.length === 0 || err) {
             res.json({ err: 'No such schedule name found' })

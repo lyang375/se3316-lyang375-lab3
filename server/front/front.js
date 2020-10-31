@@ -122,16 +122,46 @@ function getTB() {
                     alert(data.err)
                 }
                 else {
-                    return data.map(function (d) {
-                        let li = createNode('li');
-                        let span = createNode('span');
-                        span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
+                    if (component == "") {
+                        return data.map(function (d) {
+                            let li = createNode('li');
+                            let span = createNode('span');
+                            span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
                     End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
                     Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
                     Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`));
-                        append(li, span);
-                        append(ul, li);
-                    })
+                            append(li, span);
+                            append(ul, li);
+                        })
+                    }
+                    else {
+                        if (data.length > 1) {
+                            return data.map(function (d) {
+                                let li = createNode('li');
+                                let span = createNode('span');
+                                span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
+                        End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
+                        Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
+                        Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`));
+                                append(li, span);
+                                append(ul, li);
+                            })
+                        }
+                        else {
+                            return data.course_info.map(function (d) {
+                                let li = createNode('li');
+                                let span = createNode('span');
+                                span.appendChild(document.createTextNode(`Course Number: ${d.class_nbr} Start Time: ${d.start_time} Pre-requist: ${d.descrlong} 
+                        End Time: ${d.end_time} Campus: ${d.campus} Facility ID: ${d.facility_ID} Days: ${d.days} 
+                        Instructor: ${d.instructors} Class Section: ${d.class_section} Component: ${d.ssr_component} 
+                        Status: ${d.enrl_stat} Description: ${d.descr}`));
+                                append(li, span);
+                                append(ul, li);
+                            })
+                        }
+                    }
+
+
                 }
             })
             .catch((err) => console.log(err))
