@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 const data = fs.readFileSync('Lab3-timetable-data.json');
 const timetable = JSON.parse(data);
 const props = Object.keys(timetable)
-var string = require('string-sanitizer');
+const expressSanitizer = require('express-sanitizer');
 const result = props.map(function (prop) {
     return {
         id: prop,
@@ -26,6 +26,8 @@ app.use((req, res, next) => {
     console.log(`${req.method} request for ${req.url}`);
     next();
 })
+app.use(express.json());
+app.use(expressSanitizer());
 
 
 router.get('/', (req, res) => {
@@ -35,7 +37,7 @@ router.get('/result', function (req, res) {
     res.send(result)
 })
 router.post('/result2', function (req, res) {
-    const subCode2 = string.sanitize(req.body.subjectCode);
+    const subCode2 = req.sanitize(req.body.subjectCode);
     let criteriaOne;
     criteriaOne = { "subject": subCode2 }
     const filterOne = timetable.filter(function (item) {
@@ -55,9 +57,9 @@ router.post('/result2', function (req, res) {
 
 
 router.post('/result3', function (req, res) {
-    const subCode3 = string.sanitize(req.body.subjectCode);
-    const courseCode = string.sanitize(req.body.courseCode);
-    const component = string.sanitize(req.body.component);
+    const subCode3 = req.sanitize(req.body.subjectCode);
+    const courseCode = req.sanitize(req.body.courseCode);
+    const component = req.sanitize(req.body.component);
     var criteriaTwo;
     var filterTwo;
     criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
@@ -93,8 +95,11 @@ router.post('/result3', function (req, res) {
 })
 
 router.post('/newSchedule', function (req, res) {
-    const newName = string.sanitize(req.body.name);
+    const newName = req.sanitize(req.body.name);
     const course = new Array();
+    if (newName.length == 0) {
+        res.json({ err: 'Schedule Name is empty, try again' })
+    }
     Schedule.find({ name: newName }, function (err, item) {
         if (item.length === 0) {
             const schedule = new Schedule({
@@ -112,9 +117,9 @@ router.post('/newSchedule', function (req, res) {
 })
 
 router.post('/addCourse', function (req, res) {
-    const scheduleName = string.sanitize(req.body.name);
-    const newSubject = string.sanitize(req.body.subject);
-    const newCourse = string.sanitize(req.body.catalog_nbr);
+    const scheduleName = req.sanitize(req.body.name);
+    const newSubject = req.sanitize(req.body.subject);
+    const newCourse = req.sanitize(req.body.catalog_nbr);
     const course = {
         subjectCode: newSubject,
         courseCode: newCourse
@@ -164,9 +169,9 @@ router.post('/addCourse', function (req, res) {
 
 })
 router.put('/submitSchedule', function (req, res) {
-    const getName = string.sanitize(req.body.name);
-    const getSubject = string.sanitize(req.body.subjectCode);
-    const getCourse = string.sanitize(req.body.courseCode);
+    const getName = req.sanitize(req.body.name);
+    const getSubject = req.sanitize(req.body.subjectCode);
+    const getCourse = req.sanitize(req.body.courseCode);
     Schedule.find({ name: getName }, function (err, item) {
         if (item.length === 0) {
             res.json({ err: 'Schedule Name not found' })
@@ -207,7 +212,7 @@ router.put('/submitSchedule', function (req, res) {
 
 })
 router.post('/getScheduleElement', function (req, res) {
-    const getSearchName = string.sanitize(req.body.name);
+    const getSearchName = req.sanitize(req.body.name);
     Schedule.find({ name: getSearchName }, function (err, item) {
         if (item) {
             if (item.length === 0) {
@@ -224,7 +229,7 @@ router.post('/getScheduleElement', function (req, res) {
     })
 })
 router.post('/deleteSchedule', function (req, res) {
-    const getDeleteName = string.sanitize(req.body.name);
+    const getDeleteName = req.sanitize(req.body.name);
     Schedule.find({ name: getDeleteName }, function (err, item) {
         if (item.length === 0 || err) {
             res.json({ err: 'No such schedule name found' })

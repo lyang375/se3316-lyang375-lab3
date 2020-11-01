@@ -63,7 +63,7 @@ function getCode() {
     document.getElementById('outputTable').style.visibility = "hidden"
     var subCode = document.getElementById('inputSubject').value
     subCode = subCode.toUpperCase();
-    if (subCode == "") {
+    if (subCode.trim().length == 0) {
         alert("Please enter a subject code")
     }
     else {
@@ -110,7 +110,7 @@ function getTB() {
     subCode = subCode.toUpperCase();
     courseCode1 = courseCode1.toUpperCase();
     component = component.toUpperCase();
-    if (subCode == "" || courseCode1 == "") {
+    if (subCode.trim().length == 0 || courseCode1.trim().length == 0) {
         alert("Please enter both subject code and course code")
     }
     else {
@@ -265,7 +265,7 @@ function createScheduleName() {
     document.getElementById('outputTable').style.visibility = "hidden"
     var createScheduleName = document.getElementById('createScheduleName').value;
     createScheduleName = createScheduleName.toUpperCase();
-    if (createScheduleName == "") {
+    if (createScheduleName.trim().length == 0) {
         alert("Please enter the schedule name you want to create")
     }
     else {
@@ -312,10 +312,10 @@ function addCourses() {
     scheduleNameForAddPairs = scheduleNameForAddPairs.toUpperCase();
     subjectCode = subjectCode.toUpperCase();
     courseCode = courseCode.toUpperCase();
-    if (scheduleNameForAddPairs == "") {
+    if (scheduleNameForAddPairs.trim().length == 0) {
         alert("Please enter the schedule name you want to add course")
     }
-    else if (subjectCode == "" || courseCode == "") {
+    else if (subjectCode.trim().length == 0 || courseCode.trim().length == 0) {
         alert("Please enter both the subject code and course code you want to add course")
     }
     else {
@@ -360,10 +360,10 @@ function submitSchedule() {
     getSubjectCode = getSubjectCode.toUpperCase();
     getCourseCode = getCourseCode.toUpperCase();
 
-    if (getScheduleName == "") {
+    if (getScheduleName.trim().length == 0) {
         alert("Please enter the schedule name you want to save course")
     }
-    else if (getSubjectCode == "" || getCourseCode == "") {
+    else if (getSubjectCode.trim().length == 0 || getCourseCode.trim().length == 0) {
         alert("Please enter both the subject code and course code you want to save the course")
     }
     else {
@@ -402,7 +402,7 @@ function getScheduleElement() {
     document.getElementById('outputTable').style.visibility = "hidden"
     var getScheduleName = document.getElementById('getScheduleNameForList').value;
     getScheduleName = getScheduleName.toUpperCase();
-    if (getScheduleName == "") {
+    if (getScheduleName.trim().length == 0) {
         alert("Please enter the schedule name you want to know the courses inside")
     }
     else {
@@ -444,7 +444,7 @@ function deleteSchedule() {
     document.getElementById('outputTable').style.visibility = "hidden"
     var getScheduleName = document.getElementById('deleteScheduleName').value;
     getScheduleName = getScheduleName.toUpperCase();
-    if (getScheduleName == "") {
+    if (getScheduleName.trim().length == 0) {
         alert("Please enter the schedule name you want to delete")
     }
     else {
