@@ -378,14 +378,18 @@ function getAllSchedule() {
             return res.json()
         })
         .then(data => {
-            return data.map(function (d) {
-                let li = createNode('li');
-                let span = createNode('span');
-                span.appendChild(document.createTextNode(`Schedules: ${d.name} Number of Courses: ${d.course.length}`));
-                append(li, span);
-                append(ul, li);
-            })
-
+            if (data.err) {
+                alert(data.err)
+            }
+            else {
+                return data.map(function (d) {
+                    let li = createNode('li');
+                    let span = createNode('span');
+                    span.appendChild(document.createTextNode(`Schedules: ${d.name} Number of Courses: ${d.course.length}`));
+                    append(li, span);
+                    append(ul, li);
+                })
+            }
         })
 
 }

@@ -123,29 +123,41 @@ router.post('/addCourse', function (req, res) {
         if (item.length === 0) {
             res.json({ err: 'Schedule Name not found' })
         }
-    })
-    var criteriaForAdd = { "subject": newSubject, "catalog_nbr": newCourse }
-    var filterForAdd = timetable.filter(function (item) {
-        for (var key in criteriaForAdd) {
-            if (item[key] === undefined || item[key] != criteriaForAdd[key])
-                return false;
-        }
-        return true;
-    });
-    if (filterForAdd && filterForAdd.length > 0) {
-        Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
-            if (add) {
-                res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
+        else {
+            var criteriaForAdd = { "subject": newSubject, "catalog_nbr": newCourse }
+            var filterForAdd = timetable.filter(function (i) {
+                for (var key in criteriaForAdd) {
+                    if (i[key] === undefined || i[key] != criteriaForAdd[key])
+                        return false;
+                }
+                return true;
+            });
+            if (filterForAdd && filterForAdd.length > 0) {
+                Schedule.find({
+                    $and: [
+                        { name: scheduleName },
+                        { course: { $elemMatch: { subjectCode: newSubject, courseCode: newCourse } } }
+                    ], function(item) {
+                        if (item) {
+                            res.json({ err: 'Courses added before' })
+                        }
+                    }
+                })
+                Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
+                    if (add) {
+                        res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
+                    }
+                    else {
+                        res.json({ err: 'Fail' })
+                    }
+                })
             }
             else {
-                res.json({ err: 'Fail' })
+                res.status(404).send({ err: `Subject Code or Course Code does not exist or not match` })
             }
-        })
-    }
-    else {
-        res.status(404).send({ err: `Subject Code or Course Code does not exist or not match` })
-    }
 
+        }
+    })
 
 })
 router.put('/submitSchedule', function (req, res) {
@@ -231,7 +243,13 @@ router.post('/deleteSchedule', function (req, res) {
 // to get all schedule 
 router.get('/getAllSchedule', function (req, res) {
     Schedule.find({}).then(schedules => {
-        res.json(schedules);
+        if (schedules.length == 0) {
+            res.json({ err: 'No schedule stored' })
+        }
+        else {
+            res.json(schedules);
+        }
+
     })
 })
 //to delete all schedule
