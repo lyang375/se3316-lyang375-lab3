@@ -106,6 +106,7 @@ h1{
 }
 .returnedInfo table{
     border-collapse: collapse;
+    visibility: hidden;
 }
 #c1{
     background-color: rgb(195, 73, 219);
