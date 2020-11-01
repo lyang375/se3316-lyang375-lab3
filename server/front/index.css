@@ -98,3 +98,49 @@ h1{
     position: relative;
     display: inline-block;
 }
+.returnedInfo th,td {
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align: center;
+}
+#c1{
+    background-color: rgb(195, 73, 219);
+}
+#c2{
+    background-color: rgb(31, 238, 169);
+}
+#c3{
+    background-color:yellow;
+}
+#c4{
+    background-color:blue;
+}
+#c5{
+    background-color: red;
+}
+#c6{
+    background-color: purple;
+}
+#c7{
+    background-color: gray;
+}
+#c8{
+    background-color:brown;
+}
+#c9{
+    background-color: darkcyan;
+}
+#c10{
+    background-color:darkgoldenrod;
+}
+#c11{
+    background-color: salmon;
+}
+
+
+
+
+
+
+
+

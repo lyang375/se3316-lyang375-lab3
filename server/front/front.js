@@ -30,6 +30,8 @@ document.getElementById('btnDeleteAllSchedule').addEventListener('click', delete
 document.getElementById('btnAddCourse').addEventListener('click', addCourses);
 
 ul = document.getElementById('output');
+tbody = document.getElementById('outputBody');
+
 
 
 function createNode(element) {
@@ -97,6 +99,7 @@ function getCode() {
 
 function getTB() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputBody').innerHTML = '';
     var subCode = document.getElementById('inputSubject2').value
     var courseCode1 = document.getElementById('inputCourseCode1').value
     var component = document.getElementById('myDropdown').value;
@@ -124,39 +127,120 @@ function getTB() {
                 else {
                     if (component == "") {
                         return data.map(function (d) {
-                            let li = createNode('li');
-                            let span = createNode('span');
-                            span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
-                    End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
-                    Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
-                    Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`));
-                            append(li, span);
-                            append(ul, li);
+                            let tr = createNode('tr');
+                            let td1 = createNode('th');
+                            let td2 = createNode('th');
+                            let td3 = createNode('th');
+                            let td4 = createNode('th');
+                            let td5 = createNode('th');
+                            let td6 = createNode('th');
+                            let td7 = createNode('th');
+                            let td8 = createNode('th');
+                            let td9 = createNode('th');
+                            let td10 = createNode('th');
+                            let td11 = createNode('th');
+                            td1.appendChild(document.createTextNode(`${d.course_info[0].class_nbr}`));
+                            td2.appendChild(document.createTextNode(`${d.course_info[0].start_time}`));
+                            td3.appendChild(document.createTextNode(`${d.course_info[0].descrlong}`));
+                            td4.appendChild(document.createTextNode(`${d.course_info[0].end_time}`));
+                            td5.appendChild(document.createTextNode(`${d.course_info[0].facility_ID}`));
+                            td6.appendChild(document.createTextNode(`${d.course_info[0].days}`));
+                            td7.appendChild(document.createTextNode(`${d.course_info[0].instructors}`));
+                            td8.appendChild(document.createTextNode(`${d.course_info[0].class_section}`));
+                            td9.appendChild(document.createTextNode(`${d.course_info[0].ssr_component}`));
+                            td10.appendChild(document.createTextNode(`${d.course_info[0].enrl_stat}`));
+                            td11.appendChild(document.createTextNode(`${d.course_info[0].descr}`));
+                            append(tr, td1)
+                            append(tr, td2)
+                            append(tr, td3)
+                            append(tr, td4)
+                            append(tr, td5)
+                            append(tr, td6)
+                            append(tr, td7)
+                            append(tr, td8)
+                            append(tr, td9)
+                            append(tr, td10)
+                            append(tr, td11)
+                            append(tbody, tr);
                         })
                     }
                     else {
                         if (data.length > 1) {
                             return data.map(function (d) {
-                                let li = createNode('li');
-                                let span = createNode('span');
-                                span.appendChild(document.createTextNode(`Course Number: ${d.course_info[0].class_nbr} Start Time: ${d.course_info[0].start_time} Pre-requist: ${d.course_info[0].descrlong} 
-                        End Time: ${d.course_info[0].end_time} Campus: ${d.course_info[0].campus} Facility ID: ${d.course_info[0].facility_ID} Days: ${d.course_info[0].days} 
-                        Instructor: ${d.course_info[0].instructors} Class Section: ${d.course_info[0].class_section} Component: ${d.course_info[0].ssr_component} 
-                        Status: ${d.course_info[0].enrl_stat} Description: ${d.course_info[0].descr}`));
-                                append(li, span);
-                                append(ul, li);
+                                let tr = createNode('tr');
+                                let td1 = createNode('th');
+                                let td2 = createNode('th');
+                                let td3 = createNode('th');
+                                let td4 = createNode('th');
+                                let td5 = createNode('th');
+                                let td6 = createNode('th');
+                                let td7 = createNode('th');
+                                let td8 = createNode('th');
+                                let td9 = createNode('th');
+                                let td10 = createNode('th');
+                                let td11 = createNode('th');
+                                td1.appendChild(document.createTextNode(`${d.course_info[0].class_nbr}`));
+                                td2.appendChild(document.createTextNode(`${d.course_info[0].start_time}`));
+                                td3.appendChild(document.createTextNode(`${d.course_info[0].descrlong}`));
+                                td4.appendChild(document.createTextNode(`${d.course_info[0].end_time}`));
+                                td5.appendChild(document.createTextNode(`${d.course_info[0].facility_ID}`));
+                                td6.appendChild(document.createTextNode(`${d.course_info[0].days}`));
+                                td7.appendChild(document.createTextNode(`${d.course_info[0].instructors}`));
+                                td8.appendChild(document.createTextNode(`${d.course_info[0].class_section}`));
+                                td9.appendChild(document.createTextNode(`${d.course_info[0].ssr_component}`));
+                                td10.appendChild(document.createTextNode(`${d.course_info[0].enrl_stat}`));
+                                td11.appendChild(document.createTextNode(`${d.course_info[0].descr}`));
+                                append(tr, td1)
+                                append(tr, td2)
+                                append(tr, td3)
+                                append(tr, td4)
+                                append(tr, td5)
+                                append(tr, td6)
+                                append(tr, td7)
+                                append(tr, td8)
+                                append(tr, td9)
+                                append(tr, td10)
+                                append(tr, td11)
+                                append(tbody, tr);
                             })
                         }
                         else {
                             return data.course_info.map(function (d) {
-                                let li = createNode('li');
-                                let span = createNode('span');
-                                span.appendChild(document.createTextNode(`Course Number: ${d.class_nbr} Start Time: ${d.start_time} Pre-requist: ${d.descrlong} 
-                        End Time: ${d.end_time} Campus: ${d.campus} Facility ID: ${d.facility_ID} Days: ${d.days} 
-                        Instructor: ${d.instructors} Class Section: ${d.class_section} Component: ${d.ssr_component} 
-                        Status: ${d.enrl_stat} Description: ${d.descr}`));
-                                append(li, span);
-                                append(ul, li);
+                                let tr = createNode('tr');
+                                let td1 = createNode('th');
+                                let td2 = createNode('th');
+                                let td3 = createNode('th');
+                                let td4 = createNode('th');
+                                let td5 = createNode('th');
+                                let td6 = createNode('th');
+                                let td7 = createNode('th');
+                                let td8 = createNode('th');
+                                let td9 = createNode('th');
+                                let td10 = createNode('th');
+                                let td11 = createNode('th');
+                                td1.appendChild(document.createTextNode(`${d.class_nbr}`));
+                                td2.appendChild(document.createTextNode(`${d.start_time}`));
+                                td3.appendChild(document.createTextNode(`${d.descrlong}`));
+                                td4.appendChild(document.createTextNode(`${d.end_time}`));
+                                td5.appendChild(document.createTextNode(`${d.facility_ID}`));
+                                td6.appendChild(document.createTextNode(`${d.days}`));
+                                td7.appendChild(document.createTextNode(`${d.instructors}`));
+                                td8.appendChild(document.createTextNode(`${d.class_section}`));
+                                td9.appendChild(document.createTextNode(`${d.ssr_component}`));
+                                td10.appendChild(document.createTextNode(`${d.enrl_stat}`));
+                                td11.appendChild(document.createTextNode(`${d.descr}`));
+                                append(tr, td1)
+                                append(tr, td2)
+                                append(tr, td3)
+                                append(tr, td4)
+                                append(tr, td5)
+                                append(tr, td6)
+                                append(tr, td7)
+                                append(tr, td8)
+                                append(tr, td9)
+                                append(tr, td10)
+                                append(tr, td11)
+                                append(tbody, tr);
                             })
                         }
                     }
