@@ -61,6 +61,7 @@ function getAll() {
 function getCode() {
     document.getElementById('output').innerHTML = '';
     var subCode = document.getElementById('inputSubject').value
+    subCode = subCode.toUpperCase();
     if (subCode == "") {
         alert("Please enter a subject code")
     }
@@ -103,6 +104,9 @@ function getTB() {
     var subCode = document.getElementById('inputSubject2').value
     var courseCode1 = document.getElementById('inputCourseCode1').value
     var component = document.getElementById('myDropdown').value;
+    subCode = subCode.toUpperCase();
+    courseCode1 = courseCode1.toUpperCase();
+    component = component.toUpperCase();
     if (subCode == "" || courseCode1 == "") {
         alert("Please enter both subject code and course code")
     }
@@ -256,6 +260,7 @@ function getTB() {
 function createScheduleName() {
     document.getElementById('output').innerHTML = '';
     var createScheduleName = document.getElementById('createScheduleName').value;
+    createScheduleName = createScheduleName.toUpperCase();
     if (createScheduleName == "") {
         alert("Please enter the schedule name you want to create")
     }
@@ -296,10 +301,13 @@ function createScheduleName() {
 }
 function addCourses() {
     document.getElementById('output').innerHTML = '';
-    var ScheduleNameForAddPairs = document.getElementById('addPairsScheduleName').value;
+    var scheduleNameForAddPairs = document.getElementById('addPairsScheduleName').value;
     var subjectCode = document.getElementById('inputSubjectCode').value;
     var courseCode = document.getElementById('inputCourseCode2').value;
-    if (ScheduleNameForAddPairs == "") {
+    scheduleNameForAddPairs = scheduleNameForAddPairs.toUpperCase();
+    subjectCode = subjectCode.toUpperCase();
+    courseCode = courseCode.toUpperCase();
+    if (scheduleNameForAddPairs == "") {
         alert("Please enter the schedule name you want to add course")
     }
     else if (subjectCode == "" || courseCode == "") {
@@ -312,7 +320,7 @@ function addCourses() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                name: ScheduleNameForAddPairs,
+                name: scheduleNameForAddPairs,
                 subject: subjectCode,
                 catalog_nbr: courseCode
             })
@@ -342,6 +350,10 @@ function submitSchedule() {
     var getScheduleName = document.getElementById('saveScheduleName').value;
     var getSubjectCode = document.getElementById('saveSubjectCode').value;
     var getCourseCode = document.getElementById('saveCourseCode').value;
+    getScheduleName = getScheduleName.toUpperCase();
+    getSubjectCode = getSubjectCode.toUpperCase();
+    getCourseCode = getCourseCode.toUpperCase();
+
     if (getScheduleName == "") {
         alert("Please enter the schedule name you want to save course")
     }
@@ -382,6 +394,7 @@ function submitSchedule() {
 function getScheduleElement() {
     document.getElementById('output').innerHTML = '';
     var getScheduleName = document.getElementById('getScheduleNameForList').value;
+    getScheduleName = getScheduleName.toUpperCase();
     if (getScheduleName == "") {
         alert("Please enter the schedule name you want to know the courses inside")
     }
@@ -422,6 +435,7 @@ function getScheduleElement() {
 function deleteSchedule() {
     document.getElementById('output').innerHTML = '';
     var getScheduleName = document.getElementById('deleteScheduleName').value;
+    getScheduleName = getScheduleName.toUpperCase();
     if (getScheduleName == "") {
         alert("Please enter the schedule name you want to delete")
     }
