@@ -43,7 +43,7 @@ function append(parent, element) {
 
 function getAll() {
     document.getElementById('output').innerHTML = '';
-
+    document.getElementById('outputTable').style.visibility = "hidden"
     fetch('/api/result')
         .then(res => res.json())
         .then(data => {
@@ -60,6 +60,7 @@ function getAll() {
 
 function getCode() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var subCode = document.getElementById('inputSubject').value
     subCode = subCode.toUpperCase();
     if (subCode == "") {
@@ -100,7 +101,9 @@ function getCode() {
 
 function getTB() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "visible"
     document.getElementById('outputBody').innerHTML = '';
+    document.getElementById('myDropdown').selectedIndex = 0;
     var subCode = document.getElementById('inputSubject2').value
     var courseCode1 = document.getElementById('inputCourseCode1').value
     var component = document.getElementById('myDropdown').value;
@@ -259,6 +262,7 @@ function getTB() {
 
 function createScheduleName() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var createScheduleName = document.getElementById('createScheduleName').value;
     createScheduleName = createScheduleName.toUpperCase();
     if (createScheduleName == "") {
@@ -301,6 +305,7 @@ function createScheduleName() {
 }
 function addCourses() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var scheduleNameForAddPairs = document.getElementById('addPairsScheduleName').value;
     var subjectCode = document.getElementById('inputSubjectCode').value;
     var courseCode = document.getElementById('inputCourseCode2').value;
@@ -347,6 +352,7 @@ function addCourses() {
 }
 function submitSchedule() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var getScheduleName = document.getElementById('saveScheduleName').value;
     var getSubjectCode = document.getElementById('saveSubjectCode').value;
     var getCourseCode = document.getElementById('saveCourseCode').value;
@@ -393,6 +399,7 @@ function submitSchedule() {
 }
 function getScheduleElement() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var getScheduleName = document.getElementById('getScheduleNameForList').value;
     getScheduleName = getScheduleName.toUpperCase();
     if (getScheduleName == "") {
@@ -419,7 +426,7 @@ function getScheduleElement() {
                         for (var i = 0; i < d.course.length; i++) {
                             let li = createNode('li');
                             let span = createNode('span');
-                            span.appendChild(document.createTextNode(`Subject: ${d.course[i].subjectCode} Course:${d.course[i].courseCode} `));
+                            span.appendChild(document.createTextNode(`Schedule: ${getScheduleName} Subject: ${d.course[i].subjectCode} Course:${d.course[i].courseCode} `));
                             append(li, span);
                             append(ul, li);
                         }
@@ -434,6 +441,7 @@ function getScheduleElement() {
 }
 function deleteSchedule() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     var getScheduleName = document.getElementById('deleteScheduleName').value;
     getScheduleName = getScheduleName.toUpperCase();
     if (getScheduleName == "") {
@@ -471,6 +479,7 @@ function deleteSchedule() {
 }
 function getAllSchedule() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     fetch('/api/getAllSchedule')
         .then(res => {
             return res.json()
@@ -493,6 +502,7 @@ function getAllSchedule() {
 }
 function deleteAllSchedule() {
     document.getElementById('output').innerHTML = '';
+    document.getElementById('outputTable').style.visibility = "hidden"
     fetch('/api/deleteAllSchedule', {
         method: 'DELETE',
         headers: {

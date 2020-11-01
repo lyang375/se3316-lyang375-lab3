@@ -137,21 +137,24 @@ router.post('/addCourse', function (req, res) {
                     $and: [
                         { name: scheduleName },
                         { course: { $elemMatch: { subjectCode: newSubject, courseCode: newCourse } } }
-                    ], function(item) {
-                        if (item) {
-                            res.json({ err: 'Courses added before' })
-                        }
-                    }
-                })
-                Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
-                    if (add) {
-                        res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
+                    ]
+                }).then(it => {
+                    if (it.length > 0) {
+                        res.json({ err: 'Course added before' })
                     }
                     else {
-                        res.json({ err: 'Fail' })
+                        Schedule.update({ name: scheduleName }, { $push: { course: course } }).then(add => {
+                            if (add) {
+                                res.json({ message: `Successfully added course ${newSubject} ${newCourse}` })
+                            }
+                            else {
+                                res.json({ err: 'Fail' })
+                            }
+                        })
                     }
                 })
             }
+
             else {
                 res.status(404).send({ err: `Subject Code or Course Code does not exist or not match` })
             }
