@@ -273,7 +273,7 @@ function createScheduleName() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept-Language': ''
+
             },
             body:
                 JSON.stringify({
