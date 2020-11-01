@@ -44,7 +44,7 @@ function append(parent, element) {
 function getAll() {
     document.getElementById('output').innerHTML = '';
 
-    fetch('http://localhost:3000/api/result')
+    fetch('/api/result')
         .then(res => res.json())
         .then(data => {
             return data.map(function (d) {
@@ -66,7 +66,7 @@ function getCode() {
         alert("Please enter a subject code")
     }
     else {
-        fetch('http://localhost:3000/api/result2', {
+        fetch('/api/result2', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ function getTB() {
         alert("Please enter both subject code and course code")
     }
     else {
-        fetch('http://localhost:3000/api/result3', {
+        fetch('/api/result3', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -265,7 +265,7 @@ function createScheduleName() {
         alert("Please enter the schedule name you want to create")
     }
     else {
-        fetch('http://localhost:3000/api/newSchedule', {
+        fetch('/api/newSchedule', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -314,7 +314,7 @@ function addCourses() {
         alert("Please enter both the subject code and course code you want to add course")
     }
     else {
-        fetch('http://localhost:3000/api/addCourse', {
+        fetch('/api/addCourse', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -361,7 +361,7 @@ function submitSchedule() {
         alert("Please enter both the subject code and course code you want to save the course")
     }
     else {
-        fetch('http://localhost:3000/api/submitSchedule', {
+        fetch('/api/submitSchedule', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -399,7 +399,7 @@ function getScheduleElement() {
         alert("Please enter the schedule name you want to know the courses inside")
     }
     else {
-        fetch('http://localhost:3000/api/getScheduleElement', {
+        fetch('/api/getScheduleElement', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -440,7 +440,7 @@ function deleteSchedule() {
         alert("Please enter the schedule name you want to delete")
     }
     else {
-        fetch('http://localhost:3000/api/deleteSchedule', {
+        fetch('/api/deleteSchedule', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -471,7 +471,7 @@ function deleteSchedule() {
 }
 function getAllSchedule() {
     document.getElementById('output').innerHTML = '';
-    fetch('http://localhost:3000/api/getAllSchedule')
+    fetch('/api/getAllSchedule')
         .then(res => {
             return res.json()
         })
@@ -493,7 +493,7 @@ function getAllSchedule() {
 }
 function deleteAllSchedule() {
     document.getElementById('output').innerHTML = '';
-    fetch('http://localhost:3000/api/deleteAllSchedule', {
+    fetch('/api/deleteAllSchedule', {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
