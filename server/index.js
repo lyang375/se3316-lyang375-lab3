@@ -59,7 +59,7 @@ router.post('/result2', function (req, res) {
 router.post('/result3', function (req, res) {
     const subCode3 = req.sanitize(req.body.subjectCode);
     const courseCode = req.sanitize(req.body.courseCode);
-    const component = req.body.component
+    const component = req.sanitize(req.body.component);
     var criteriaTwo;
     var filterTwo;
     criteriaTwo = { "subject": subCode3, "catalog_nbr": courseCode }
