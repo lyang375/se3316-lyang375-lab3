@@ -103,7 +103,7 @@ function getTB() {
     document.getElementById('output').innerHTML = '';
     document.getElementById('outputTable').style.visibility = "visible"
     document.getElementById('outputBody').innerHTML = '';
-
+    document.getElementById('myDropdown').selectedIndex = 0;
     var subCode = document.getElementById('inputSubject2').value
     var courseCode1 = document.getElementById('inputCourseCode1').value
     var component = document.getElementById('myDropdown').value;
